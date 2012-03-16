@@ -20,7 +20,7 @@ function all_articles_page($num_inicial_limt=0){
 	return $result;
 }
 
-function articles_page_mas_votados($num_inicial_limt=0){
+function top_articles_page($num_inicial_limt=0){
 	$select="SELECT * FROM `articles` WHERE `public`=1 LIMIT ".$num_inicial_limt.",5";
 	$query=mysql_query($select);
 	while ($row = mysql_fetch_array($query)) {
