@@ -83,14 +83,6 @@ class articulos{
 		$this->salir_portada($article_id);
 	}
 
-	function verificacion_votar($article_id,$ip){
-		$select="SELECT * FROM `votes` WHERE `ip` =".$ip." `article_id`= ".$article_id;
-		$query=mysql_query($select);
-		if($query=false){
-			$mensaje="Ya ha votado este articulo.";
-		}
-	}
-
 	private function incremnto_columna($columna,$article_id){
 		$insert="UPDATE `articles` SET `".$columna."` = `".$columna."`+1 WHERE `articles`.`id` =".$article_id;
 		$query=mysql_query($insert);
