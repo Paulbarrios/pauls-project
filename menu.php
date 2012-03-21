@@ -1,10 +1,14 @@
 <div class="span10">
 
 		<ul class="nav nav-tabs">
-		  <li >
-		    <a href="#">Portada</a>
+		  <li <?if(!isset($_GET['page'])||(isset($_GET['page'])&&$_GET['page']=="portada.php")||(isset($_GET['page'])&&$_GET['page']=="index.php")){echo 'class="active"';} ?>>
+		    <a href="index.php">Portada</a>
 		  </li>
-		  <li class="active"><a href="#">Pendientes</a></li>
-		  <li><a href="#">Usuarios</a></li>
+		  <li <?if((isset($_GET['page'])&&$_GET['page']=="pendientes.php")){echo 'class="active"';} ?>>
+		 	<a href="index.php?page=pendientes.php">Pendientes</a>
+		  </li>
+		  <li <?if((isset($_GET['page'])&&$_GET['page']=="users.php")){echo 'class="active"';} ?>>
+		  	<a href="index.php?page=users.php">Usuarios</a>
+		  </li>
 		</ul>
 </div>

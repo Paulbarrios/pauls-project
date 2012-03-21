@@ -1,6 +1,13 @@
 .center {text-align:center}
 .espacio {margin-top: -5px}
 .line {border-bottom: 2px solid #eeeeee; margin-bottom: 5px;}
-img.height {height: 122px}
 .height {height: 122px}
 .width {width: 60px}
+.comment{padding-left: 20px; padding-bottom: 20px;}
+.p {margin-top: -30;}
+.p2 {margin-top: -45; margin-bottom: -50px;}
+.badge1 {margin-left: 30px;}
+.boton {margin-top: 20px;}
+div.span6.offset2.add {width: 500px}
+.margin_articulos {margin-bottom: 20px}
+

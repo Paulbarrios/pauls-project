@@ -1,22 +1,29 @@
-<div class="span4 offset3">
+<?
+include 'functions.php';
+$connection= new connection;
+$id_connection=$connection->connect();
+$usuario= new usuario;
+if (!empty($_POST)) {
+  $_POST=$usuario->code_pass($_POST);
+  $login=$usuario->login($_POST);
+}
+$connection->desconnect($id_connection);
+?>
+<?if(!empty($_POST)):?>
+  <div class="span6 offset2">
+    <div class="well center">
+      <?echo $login;?>
+    </div>
+  </div>
+<?else:?>
+	<div class="span4 offset3">
  		<h2>Login</h2>
- 		<form class="well">
+ 		<form class="form-horizontal" method="post" action="index.php?page=login.php">
   			<label>Nombre de usuario</label>
-  			<input type="text" class="span3">
+  			<input type="text" class="span3" name="user_name">
   			<label>Contraseña</label>
-  			<input type="password" class="span3">
+  			<input type="password" class="span3" name="password">
   			<button type="submit" class="btn pull-right">Login</button>
 		</form>
-    <form class="form-horizontal">
-      <fieldset>
-        <legend>Legend text</legend>
-        <div class="control-group">
-            <label class="control-label" for="input01">Text input</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" id="input01">
-            <p class="help-block">Supporting help text</p>
-          </div>
-        </div>
-        </fieldset>
-      </form>
-</div>
+	</div>
+<?endif;?>
