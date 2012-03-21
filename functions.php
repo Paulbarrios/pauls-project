@@ -71,13 +71,13 @@ class articulos{
 	}
 
 	function comentar($article_id,$user_id,$content){
-		$insert="INSERT INTO `news`.`comments` (`id`, `user_id`, `article_id`, `content`) VALUES (NULL, '".$article_id."', '".$user_id."', '".$content."')";
+		$insert="INSERT INTO `comments` (`id`, `article_id`, `user_id`, `content`) VALUES (NULL, '".$article_id."', '".$user_id."', '".$content."')";
 		$query=mysql_query($insert);
 		$this->incremnto_columna("total_coment",$article_id);
 	}
 
 	function votar($article_id,$user_id=0,$ip){
-		$insert="INSERT INTO `news`.`votes` (`id`, `article_id`, `user_id`, `ip`) VALUES (NULL, '".$article_id."', '".$user_id."', '".$ip."')";
+		$insert="INSERT INTO `votes` (`id`, `article_id`, `user_id`, `ip`) VALUES (NULL, '".$article_id."', '".$user_id."', '".$ip."')";
 		$query=mysql_query($insert);
 		$this->incremnto_columna("total_votes",$article_id);
 		$this->salir_portada($article_id);
@@ -92,7 +92,7 @@ class articulos{
 	}
 
 	private function incremnto_columna($columna,$article_id){
-		$insert="UPDATE `news`.`articles` SET `".$columna."` = `".$columna."`+1 WHERE `articles`.`id` =".$article_id;
+		$insert="UPDATE `articles` SET `".$columna."` = `".$columna."`+1 WHERE `articles`.`id` =".$article_id;
 		$query=mysql_query($insert);
 	}
 
@@ -101,7 +101,7 @@ class articulos{
 		$query=mysql_query($select);
 		$row = mysql_fetch_array($query);
 		if($row['total_votes']>=10){
-			$insert="UPDATE `news`.`articles` SET `public` = 1 WHERE `articles`.`id` =".$article_id;
+			$insert="UPDATE `articles` SET `public` = 1 WHERE `articles`.`id` =".$article_id;
 			$query=mysql_query($insert);
 			$usuario= new usuario;
 			$usuario->badges($row['user_id'],"3");
@@ -128,7 +128,7 @@ class articulos{
 	}
 
 	function add_article($datos){
-		$insert="INSERT INTO `news`.`articles` (`id`, `title`, `description`, `link`, `image`, `user_id`) VALUES (NULL, '".$datos['title']."', '".$datos['description']."', '".$datos['link']."', '".$datos['image']."', '".$datos['user_id']."')";
+		$insert="INSERT INTO `articles` (`id`, `title`, `description`, `link`, `image`, `user_id`) VALUES (NULL, '".$datos['title']."', '".$datos['description']."', '".$datos['link']."', '".$datos['image']."', '".$datos['user_id']."')";
 		$query=mysql_query($insert);
 	}
 }
@@ -136,13 +136,13 @@ class articulos{
 class usuario{
 
 	function registro($datos){
-		$insert="INSERT INTO `news`.`users` (`id`, `user_name`, `password`, `mail`, `bio`) VALUES (NULL, '".$datos['user_name']."', '".$datos['password']."', '".$datos['mail']."', '".$datos['bio']."')";
+		$insert="INSERT INTO `users` (`id`, `user_name`, `password`, `mail`, `bio`) VALUES (NULL, '".$datos['user_name']."', '".$datos['password']."', '".$datos['mail']."', '".$datos['bio']."')";
 		$query=mysql_query($insert);
 		$select="SELECT MAX( `id` ) AS id FROM `users`";
 		$query=mysql_query($select);
 		$row = mysql_fetch_array($query);
 		$id=$row['id'];
-		$insert="INSERT INTO `news`.`badges` (`id`, `user_id`) VALUES (NULL, '".$id."')";
+		$insert="INSERT INTO `badges` (`id`, `user_id`) VALUES (NULL, '".$id."')";
 		$query=mysql_query($insert);
 		$mensaje="El registro se realizo con exito";
 		if ($query==false) {
@@ -180,7 +180,7 @@ class usuario{
 	}
 
 	function edit_perfil($datos){
-		$insert="UPDATE `news`.`users` SET
+		$insert="UPDATE `users` SET
 		`password` = '".$datos['password']."',
 		`mail` = '".$datos['mail']."',
 		`bio` = '".$datos['bio']."' 
@@ -203,7 +203,7 @@ class usuario{
 	}
 
 	function badges($user_id,$badge){
-		$insert="UPDATE `news`.`badges` SET `badge".$badge."` = '1' WHERE `user_id`=".$user_id;
+		$insert="UPDATE `badges` SET `badge".$badge."` = '1' WHERE `user_id`=".$user_id;
 		$query=mysql_query($insert);
 	}
 

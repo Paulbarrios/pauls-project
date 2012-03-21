@@ -20,13 +20,15 @@ $connection->desconnect($id_connection);
 	<div class="row">
 			<div class="span1">
 				<div>
-						<p class="center">
-							<span class="badge badge-info"><?echo $mostrar['total_votes'];?></span>
-						</p>
-						<p class="center espacio">
-							<span class="label label-info">Votar</span>
-						</p>
-				</div>
+							<p class="center">
+								<span class="badge badge-info"><?echo $mostrar['total_votes'];?></span>
+							</p>
+							<p class="center espacio">
+								<a href="votar.php?article_id=<?echo $mostrar['id'];?>&page=articulo.php">
+									<span class="label label-info">Votar</span>
+								</a>
+							</p>
+					</div>
 			</div>
 			<div class="span2">
 				<div class="thumbnail height">
