@@ -12,7 +12,10 @@ $connection->desconnect($id_connection);
 <?if(!empty($_POST)):?>
   <div class="span6 offset2">
     <div class="well center">
-      <?echo $registro;?>
+        <?echo $registro;?>
+        <div>
+          <a href="index.php?page=login.php">Login</a>
+        </div>
     </div>
   </div>
 <?else:?>

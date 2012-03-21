@@ -36,9 +36,9 @@ $connection->desconnect($id_connection);
 			   </div>
 			<div class="span7">
 				<div class="line">
-					<h3><?echo $articulo['title'];?></h3>
+					<a class="link8" href="<?echo $articulo['link'];?>"><h3><?echo $articulo['title'];?></h3></a>
 					<footer>
-						Puablicado por: <?echo $articulo['user_name'];?> | Link: <?echo $articulo['link'];?>
+						Puablicado por: <?echo $articulo['user_name'];?> | Link: <a href="<?echo $articulo['link'];?>"><?echo $articulo['link'];?></a>
 					</footer>
 				</div>
 				<div>

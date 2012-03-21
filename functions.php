@@ -25,7 +25,7 @@ class articulos{
 	private $resultados_pagina=5;
 
 	function all_articles_page($num_inicial_limt=0){
-		$select="SELECT articles.id, `title`, `description`, `link`, `image`, `total_votes`, `total_coment`, `user_id`, `public`,`user_name` FROM `articles` INNER JOIN `users` ON articles.user_id = users.id LIMIT ".$num_inicial_limt.",".$this->resultados_pagina;
+		$select="SELECT articles.id, `title`, `description`, `link`, `image`, `total_votes`, `total_coment`, `user_id`, `public`,`user_name` FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE `public`=0 ORDER BY  `articles`.`id` DESC LIMIT ".$num_inicial_limt.",".$this->resultados_pagina;
 		$query=mysql_query($select);
 		while ($row = mysql_fetch_array($query)) {
 			$result[]=$row;
@@ -34,7 +34,7 @@ class articulos{
 	}
 
 	function top_articles_page($num_inicial_limt=0){
-		$select="SELECT articles.id, `title`, `description`, `link`, `image`, `total_votes`, `total_coment`, `user_id`, `public`,`user_name` FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE `public`=1 LIMIT ".$num_inicial_limt.",".$this->resultados_pagina;
+		$select="SELECT articles.id, `title`, `description`, `link`, `image`, `total_votes`, `total_coment`, `user_id`, `public`,`user_name` FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE `public`=1 ORDER BY  `articles`.`id` DESC LIMIT ".$num_inicial_limt.",".$this->resultados_pagina;
 		$query=mysql_query($select);
 		while ($row = mysql_fetch_array($query)) {
 			$result[]=$row;
@@ -43,7 +43,7 @@ class articulos{
 	}
 
 	function paginacion($pagina){
-		$select="SELECT COUNT( `id` ) AS total FROM `articles` ";
+		$select="SELECT COUNT( `id` ) AS total FROM `articles` WHERE  `public` =0 ";
 		$query=mysql_query($select);
 		$row = mysql_fetch_array($query);
 		$total=$row['total'];
@@ -102,7 +102,7 @@ class articulos{
 	}
 
 	function mostrar_articulo($article_id){
-		$select="SELECT articles.id, `title`, `description`, `link`, `image`, `total_votes`, `total_coment`, `user_id`, `public`,`user_name` FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.id=".$article_id['article_id'];
+		$select="SELECT articles.id, `title`, `description`, `link`, `image`, `total_votes`, `total_coment`, `user_id`, `public`,`user_name` FROM `articles` INNER JOIN `users` ON articles.user_id = users.id WHERE articles.id=".$article_id;
 		$query=mysql_query($select);
 		$row = mysql_fetch_array($query);
 
@@ -110,7 +110,7 @@ class articulos{
 	}
 
 	function mostrar_comentarios($article_id){
-		$select="SELECT `content`, `user_name` FROM `comments` INNER JOIN `users` ON comments.user_id=users.id WHERE comments.article_id=".$article_id['article_id'];
+		$select="SELECT `content`, `user_name` FROM `comments` INNER JOIN `users` ON comments.user_id=users.id WHERE comments.article_id=".$article_id;
 		$query=mysql_query($select);
 		$result=array();
 		while ($row = mysql_fetch_array($query)) {
@@ -150,9 +150,8 @@ class usuario{
 		if($row==false){
 			$mensaje="Este usuario no esta registrado.";
 		}elseif ($datos['user_name']==$row['user_name'] && $datos['password']==$row['password']){
-			//session_start();
 			$_SESSION['id']=$row['id'];
-			$mensaje="Se ha logeado correctamente.";
+			$mensaje="ok";
 		}else{
 			$mensaje="El usuario o la contraseña no son correctos.";
 		}

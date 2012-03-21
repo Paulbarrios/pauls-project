@@ -12,7 +12,11 @@ $connection->desconnect($id_connection);
 <?if(!empty($_POST)):?>
   <div class="span6 offset2">
     <div class="well center">
-      <?echo $login;?>
+      <?if($login=="ok"){
+        header('location: index.php?page=perfil.php');
+      }else{
+         echo $login;
+      }?>
     </div>
   </div>
 <?else:?>
