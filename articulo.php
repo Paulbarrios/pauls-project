@@ -4,6 +4,14 @@ $id=$_GET['id'];
 $connection= new connection;
 $id_connection=$connection->connect();
 $articulos= new articulos;
+$usuario= new usuario;
+if(!empty($_POST)){
+	$articulos->comentar($id,$_SESSION['id'],$_POST['content']);
+	$usuario->badges($_SESSION['id'],"2");
+}
+if(!empty($_SESSION['id'])){
+	$user=$usuario->mostrar_perfil($_SESSION['id']);
+}
 $mostrar=$articulos->mostrar_articulo($id);
 $comentarios=$articulos->mostrar_comentarios($id);
 $connection->desconnect($id_connection);
@@ -48,9 +56,26 @@ $connection->desconnect($id_connection);
 	<?foreach($comentarios as $comentario):?>
 		<div class="row">
 			<pre class="comment">
-				<p class="p"><h3><?echo $comentario['user_name'];?></h3></p>
+				<p class="p"><h2><?echo $comentario['user_name'];?></h2></p>
 				<p class="p2"><?echo $comentario['content'];?></p>
 			</pre>
 		</div>
 	<?endforeach;?>
-</div>	
+</div>
+<?if(!empty($_SESSION['id'])):?>
+	<div class="span10">
+		<div class="row">
+		    <h3>Comentar</h3>
+		      <form class="well" method="post" action="index.php?page=articulo.php&id=<?echo $id;?>">
+		        <p class="p3"><h4><?echo $user['user_name'];?></h4></p>
+	    		<label>Contenido</label>
+	    		<textarea rows="3" class="span10" name="content"></textarea>
+	          	<input type="hidden" name="user_id" value="<?echo $_SESSION['id']?>">
+	          	<input type="hidden" name="article_id" value="<?echo $id?>">
+	          <div>
+	            <button type="submit" class="btn">Añadir comentario</button>
+	          </div>
+	  		</form>
+	   	</div>
+	</div>
+<?endif;?>

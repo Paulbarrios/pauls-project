@@ -70,9 +70,10 @@ class articulos{
 		return $result;
 	}
 
-	function comentar($user_id=0,$article_id,$content){
-		$insert="INSERT INTO `news`.`comments` (`id`, `article_id`, `user_id`, `content`) VALUES (NULL, '".$user_id."', '".$article_id."', '".$content."')";
+	function comentar($article_id,$user_id,$content){
+		$insert="INSERT INTO `news`.`comments` (`id`, `user_id`, `article_id`, `content`) VALUES (NULL, '".$article_id."', '".$user_id."', '".$content."')";
 		$query=mysql_query($insert);
+		$this->incremnto_columna("total_coment",$article_id);
 	}
 
 	function votar($article_id,$user_id=0,$ip){
@@ -96,12 +97,15 @@ class articulos{
 	}
 
 	private function salir_portada($article_id){
-		$select="SELECT `total_votes` FROM `articles` WHERE `id` =".$article_id;
+		$select="SELECT `total_votes`,`user_id` FROM `articles` WHERE `id` =".$article_id;
 		$query=mysql_query($select);
 		$row = mysql_fetch_array($query);
 		if($row['total_votes']>=10){
 			$insert="UPDATE `news`.`articles` SET `public` = 1 WHERE `articles`.`id` =".$article_id;
 			$query=mysql_query($insert);
+			$usuario= new usuario;
+			$usuario->badges($row['user_id'],"3");
+
 		}
 	}
 
@@ -168,7 +172,7 @@ class usuario{
 	}
 
 	function mostrar_perfil($user_id){
-		$select="SELECT * FROM `users` WHERE `user_name`= '".$user_id['user_id']."'";
+		$select="SELECT * FROM `users` INNER JOIN `badges` ON users.id=badges.user_id WHERE users.id=".$user_id;
 		$query=mysql_query($select);
 		$row = mysql_fetch_array($query);
 
@@ -176,8 +180,7 @@ class usuario{
 	}
 
 	function edit_perfil($datos){
-		$insert="UPDATE `news`.`users` SET 
-		`user_name` = '".$datos['user_name']."',
+		$insert="UPDATE `news`.`users` SET
 		`password` = '".$datos['password']."',
 		`mail` = '".$datos['mail']."',
 		`bio` = '".$datos['bio']."' 

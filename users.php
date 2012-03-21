@@ -41,13 +41,6 @@ $connection->desconnect($id_connection);
 				</div>
 			</div>
 			<?endif;?>
-			<?if($user['badge4']=='1'):?>
-			<div class="span1">
-				<div class="thumbnail">
-					<img alt="Medium" src="/img/noticias.jpg" width="120">
-				</div>
-			</div>
-			<?endif;?>
 		</div>
 	</div>
 <?endforeach;?>
